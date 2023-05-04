@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase Popup Sign-In Example</title>
-  <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
-  <script src="app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to sign in with email and password using Firebase Auth</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <h1>Firebase Popup Sign-In Example</h1>
-  <button id="signInWithGoogle">Sign in with Google</button>
+    <h1>How to sign in with email and password using Firebase Auth</h1>
+    <section id="sectionSignin">
+        <h2>Sign in / Sign up</h2>
+        <form>
+            <button type="submit" id="buttonSignin">Sign in</button>
+        </form>
+    </section>
+    <section id="sectionUser">
+        <h2>User information</h2>
+        <dl>
+            <dt>uid</dt>
+            <dd id="uid"></dd>
+        </dl>
+    </section>
+    <section id="sectionSignout">
+        <h2>Sign out</h2>
+        <button type="button" id="buttonSignout">Sign out</button>
+    </section>
+    <script src="js/app.js"></script>
+    <!-- Add this element to your HTML -->
+    <p id="errorMessage"></p>
+
 </body>
+
 </html>

@@ -1,34 +1,67 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"; 
-import { initializeApp } from "firebase/app";
+import {initializeApp} from "firebase/app"
+import {
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth"
 
+main()
 
-const firebaseConfig = {
-  "apiKey": "AIzaSyCBsJqBS3Yf8sqZJDFcfuyCXf68xFvfktU",
-  "authDomain": "fir-auth-20230423.firebaseapp.com",
-  "projectId": "fir-auth-20230423",
-  "storageBucket": "fir-auth-20230423.appspot.com",
-  "messagingSenderId": "218586698019",
-  "appId": "1:218586698019:web:8d87fb1ad2f1bb50c5bc96",
-  "measurementId": "G-GRL23RHV5W"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Sign in with popup
-async function signInWithPopup() {
+async function main () {
   try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const result = await firebase.auth().signInWithPopup(provider);
-    const user = result.user;
-    console.log('User signed in:', user);
-  } catch (error) {
-    console.error('Error signing in:', error);
+    const el = {
+      sectionSignin: document.querySelector('#sectionSignin'),
+      sectionUser: document.querySelector('#sectionUser'),
+      sectionSignout: document.querySelector('#sectionSignout'),
+
+      buttonSignin: document.querySelector('#buttonSignin'),
+      buttonSignout: document.querySelector('#buttonSignout'),
+
+      uid: document.querySelector('#uid'),
+      errorMessage: document.querySelector('#errorMessage'), // Add this line
+    }
+
+    const response = await fetch('firebase-config.json') // <1>
+    const firebaseConfig = await response.json()
+    const app = initializeApp(firebaseConfig) // <2>
+    const auth = getAuth(app) // <3>
+
+    onAuthStateChanged(auth, (user) => { // <4>
+      if (user) {
+        el.sectionSignin.style.display = 'none'
+        el.sectionUser.style.display = 'block'
+        el.sectionSignout.style.display = 'block'
+        el.uid.innerHTML = user.uid
+      } else {
+        el.sectionSignin.style.display = 'block'
+        el.sectionUser.style.display = 'none'
+        el.sectionSignout.style.display = 'none'
+      }
+    })
+
+    el.buttonSignin.addEventListener('click', async (event) => { // <5>
+      try {
+        event.preventDefault()
+
+        const provider = new GoogleAuthProvider()
+        await signInWithRedirect(auth, provider)
+      } catch (err) {
+        el.errorMessage.innerHTML = err.message
+        console.error(err)
+      }
+    })
+
+    el.buttonSignout.addEventListener('click', async (event) => { // <6>
+      try {
+        event.preventDefault()
+        await signOut(auth)
+      } catch (err) {
+        console.error(err)
+      }
+    })
+  } catch (err) {
+    console.error(err)
   }
 }
-
-// Add an event listener for the "Sign in with Google" button
-window.addEventListener('DOMContentLoaded', () => {
-  const signInButton = document.getElementById('signInWithGoogle');
-  signInButton.addEventListener('click', signInWithPopup);
-});
