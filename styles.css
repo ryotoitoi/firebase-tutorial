@@ -2,31 +2,32 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  h1 {
+}
+
+h1 {
     background-color: #4CAF50;
     color: white;
     text-align: center;
     padding: 1rem;
     margin-bottom: 2rem;
-  }
-  
-  section {
+}
+
+section {
     display: none;
     margin-bottom: 2rem;
-  }
-  
-  #sectionUser, #sectionSignout {
+}
+
+#sectionUser,
+#sectionSignout {
     display: none;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     justify-content: center;
-  }
-  
-  button {
+}
+
+button {
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -36,15 +37,14 @@ body {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
-  #errorMessage {
+}
+
+#errorMessage {
     color: red;
     text-align: center;
     margin-top: 1rem;
-  }
-  
+}
